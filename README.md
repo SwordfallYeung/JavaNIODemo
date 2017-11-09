@@ -36,4 +36,4 @@ Channel是一个对象，可以通过它读取和写入数据。可以把它看�
 Channel用于在字节缓冲区和位于通道另一侧的实体（通常是一个文件或套接字）之间有效地传输数据。
 
 通道是一种途径，借助该途径，可以用最小的总开销来访问操作系统本身的I/O服务。缓冲区则是通道内部用来发送和接收数据的端点。通道channel充当连接I/O服务的导管：
-![Image text]()
+![Image text](https://github.com/qiushangwenyue/JavaNIODemo/blob/master/img/hello.png)
