@@ -38,10 +38,10 @@ public class ByteOrderDemo {
 		}
 		System.out.println("My PC:"+ByteOrder.nativeOrder().toString());
 	}
-//	//结果
+//结果
 //Default java endian: BIG_ENDIAN
-//	Now: LITTLE_ENDIAN
-//0
+//Now: LITTLE_ENDIAN
+//      0
 //		1
 //		2
 //		0
