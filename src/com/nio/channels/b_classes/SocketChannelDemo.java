@@ -6,7 +6,7 @@ package com.nio.channels.b_classes;
  * @desc
  *
  * 抽象类
- * 
+ *
  **/
 public class SocketChannelDemo {
 }
