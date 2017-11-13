@@ -24,22 +24,7 @@ public class FileLockDemo {
 	private static Random random=new Random();
 
 	public static void main(String[] args) {
-		if (args.length < 1){
-			System.out.println("Usage: [-r | -w]");
-			System.exit(1);
-		}
-		boolean isWriter=args[0].equals("-w");
-		try {
-			RandomAccessFile randomAccessFile=new RandomAccessFile(filepath,isWriter);
-			FileChannel channel=randomAccessFile.getChannel();
-			if (isWriter){
-				lockAndWrite(channel);
-			}else {
-				lockAndRead(channel);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
 	}
 	public static void lockAndWrite(FileChannel channel){
 		try {
