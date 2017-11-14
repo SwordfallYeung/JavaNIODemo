@@ -13,7 +13,11 @@ import java.util.Iterator;
  * @create 2017-11-13 16:51
  * @desc
  *
- *  抽象类 SocketChannel
+ * 抽象类
+ *
+ * ServerSocketChannel与SocketChannel通常联合使用，用于作服务端
+ *
+ *  *  抽象类 SocketChannel
  *
  * Server端 看不懂
  * Java NIO是非阻塞IO的实现，基于事件驱动，非常适用于服务器需要维持大量连接，但是数据交换量不大的情况，
@@ -30,20 +34,25 @@ import java.util.Iterator;
  * capacity是固定大小，position是当前读写位置，limit是一个类似于门限的值，用于控制读写的最大的位置。Buffer的常用方法有clear、compact、flip等等，
  * 还有比如Buffer的静态方法wrap等等。
  *
- * Selector用于检测通道，我们通过它才直到哪个通道发生了哪个事件，所以如果需要用selector的话就需要首先进行register，然后遍历SelectionKey对事件进行处理。
+ * Selector用于检测通道，我们通过它才知道哪个通道发生了哪个事件，所以如果需要用selector的话就需要首先进行register，然后遍历SelectionKey对事件进行处理。
  * 它一共有SelectionKey.OP_CONNECT、SelectionKey.OP_ACCEPT、SelectionKey.OP_READ、SelectionKey.OP_WRITE四种类型
+ *
+ * 服务端
+ *
  **/
-public class SocketChannel_NioServer_Demo {
+public class ServerSocketChannel_NioServer_Demo {
 	//通道管理器
 	private Selector selector;
 
 	//获取一个ServerSocket通道，并初始化通道
-	public SocketChannel_NioServer_Demo init(int port) throws Exception{
-		//获取一个ServerSocket通道
+	public ServerSocketChannel_NioServer_Demo init(int port) throws Exception{
+		//获取一个ServerSocket通道，打开监听信道
 		ServerSocketChannel serverSocketChannel=ServerSocketChannel.open();
+		//设置为非阻塞模式
 		serverSocketChannel.configureBlocking(false);
+		//与本地端口绑定
 		serverSocketChannel.socket().bind(new InetSocketAddress(port));
-		//获取通道管理器
+		//获取通道管理器，创建选择器
 		selector=Selector.open();
 		//将通道管理器与通道绑定，并为该通道注册SelectionKey.OP_ACCEPT事件，
 		//只有当该事件到达时，Selector.select()会返回，否则一直阻塞。
@@ -71,6 +80,7 @@ public class SocketChannel_NioServer_Demo {
 					ServerSocketChannel server=(ServerSocketChannel) key.channel();
 					//获得客户端连接通道
 					SocketChannel channel=server.accept();
+					//设置为非阻塞模式
 					channel.configureBlocking(false);
 					//向客户端发消息
 					channel.write(ByteBuffer.wrap(new String("send message to client").getBytes()));
@@ -83,7 +93,7 @@ public class SocketChannel_NioServer_Demo {
 					//获取客户端传输数据可读消息通道。
 					SocketChannel channel=(SocketChannel)key.channel();
 					//创建读取数据缓冲器
-					ByteBuffer buffer=ByteBuffer.allocate(10);
+					ByteBuffer buffer=ByteBuffer.allocate(40);
 					int read=channel.read(buffer);
 					byte[] data=buffer.array();
 					String message=new String(data);
@@ -96,6 +106,6 @@ public class SocketChannel_NioServer_Demo {
 	}
 
 	public static void main(String[] args) throws Exception{
-		new SocketChannel_NioServer_Demo().init(9981).listen();
+		new ServerSocketChannel_NioServer_Demo().init(9981).listen();
 	}
 }

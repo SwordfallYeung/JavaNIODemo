@@ -24,7 +24,7 @@ public class SocketChannel_NioClient_Demo {
 	public SocketChannel_NioClient_Demo init(String serverIp, int port) throws Exception{
 		//获取socket通道
 		SocketChannel channel=SocketChannel.open();
-
+		//设置为非阻塞模式
 		channel.configureBlocking(false);
 		//获得通道管理器
 		selector=Selector.open();
@@ -54,7 +54,7 @@ public class SocketChannel_NioClient_Demo {
 					if (channel.isConnectionPending()){
 						channel.finishConnect();
 					}
-
+					//设置为非阻塞模式
 					channel.configureBlocking(false);
 					//向服务器发送消息
 					channel.write(ByteBuffer.wrap(new String("send message to server.").getBytes()));
@@ -66,7 +66,7 @@ public class SocketChannel_NioClient_Demo {
 					//有可读数据事件。
 					SocketChannel channel=(SocketChannel)key.channel();
 
-					ByteBuffer buffer=ByteBuffer.allocate(10);
+					ByteBuffer buffer=ByteBuffer.allocate(30);
 					channel.read(buffer);
 					byte[] data=buffer.array();
 					String message=new String(data);
