@@ -38,5 +38,5 @@ Channel用于在字节缓冲区和位于通道另一侧的实体（通常是一�
 通道是一种途径，借助该途径，可以用最小的总开销来访问操作系统本身的I/O服务。缓冲区则是通道内部用来发送和接收数据的端点。通道channel充当连接I/O服务的导管：<br/>
 ![Image text](https://github.com/qiushangwenyue/JavaNIODemo/blob/master/img/hello.png)<br/>
 <br/>
-NIO通信过程（涉及serverSocketChannel、socketChannel、selector、buffer）:<br/>
+NIO通信过程（涉及serverSocketChannel、socketChannel、selector、buffer、selectionKey）:<br/>
 ![Image text](https://github.com/qiushangwenyue/JavaNIODemo/blob/master/img/world.png)<br/>
